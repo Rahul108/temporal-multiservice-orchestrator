@@ -1,0 +1,23 @@
+{
+  "name": "temporal-multi-server-poc",
+  "version": "1.0.0",
+  "description": "Temporal.io POC demonstrating multi-server activity orchestration",
+  "type": "module",
+  "scripts": {
+    "server-a": "node server-a/index.js",
+    "server-b": "node server-b/index.js",
+    "worker": "node temporal/worker.js",
+    "client": "node temporal/client.js",
+    "temporal": "docker compose up -d"
+  },
+  "dependencies": {
+    "@temporalio/activity": "^1.8.6",
+    "@temporalio/client": "^1.8.6",
+    "@temporalio/worker": "^1.8.6",
+    "@temporalio/workflow": "^1.8.6",
+    "axios": "^1.7.7",
+    "dotenv": "^17.2.3",
+    "express": "^4.19.2",
+    "nanoid": "^5.0.8"
+  }
+}
