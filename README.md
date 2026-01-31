@@ -1,121 +1,66 @@
-# Temporal Multi-Server Orchestration POC# Temporal Multi-Server Orchestration POC
+# Temporal Multi-Server Orchestration POC
 
+A comprehensive Proof of Concept demonstrating **Temporal.io workflow orchestration** across multiple Node.js backend servers. This project showcases both **single-server** and **multi-server activity orchestration** patterns using Temporal's powerful workflow engine.
 
+## 🎯 Project Overview
 
-A Temporal.io proof-of-concept demonstrating workflow orchestration across multiple Node.js servers.A comprehensive Proof of Concept demonstrating **Temporal.io workflow orchestration** across multiple Node.js backend servers. This project showcases both **single-server** and **multi-server activity orchestration** patterns using Temporal's powerful workflow engine.
+This POC demonstrates:
 
-
-
-## Installation## 🎯 Project Overview
-
-
-
-```bashThis POC demonstrates:
-
-npm install
-
-```- ✅ **Temporal.io SDK** integration with Node.js
-
+- ✅ **Temporal.io SDK** integration with Node.js
 - ✅ **Multi-server orchestration** with two independent Express services
-
-## Setup- ✅ **Local activities** (single-server operations)
-
+- ✅ **Local activities** (single-server operations)
 - ✅ **Remote activities** (cross-server API calls)
+- ✅ **Workflow composition** with error handling and retries
+- ✅ **Docker Compose** setup for running Temporal server locally
 
-1. **Start Temporal server:**- ✅ **Workflow composition** with error handling and retries
+## 📁 Project Structure
 
-```bash- ✅ **Docker Compose** setup for running Temporal server locally
-
-npm run temporal
-
-```## 📁 Project Structure
-
-
-
-2. **Start Server A (in new terminal):**```
-
-```bashtemporal-poc/
-
-npm run server-a├── temporal/                   # Temporal workflow components
-
-```│   ├── activities.js          # Activity definitions (local & remote)
-
+```
+temporal-poc/
+├── temporal/                   # Temporal workflow components
+│   ├── activities.js          # Activity definitions (local & remote)
 │   ├── workflow.js            # Workflow orchestration logic
-
-3. **Start Server B (in new terminal):**│   ├── worker.js              # Temporal worker implementation
-
-```bash│   └── client.js              # Workflow client (starts workflows)
-
-npm run server-b│
-
-```├── server-a/                   # Backend Service A
-
+│   ├── worker.js              # Temporal worker implementation
+│   └── client.js              # Workflow client (starts workflows)
+│
+├── server-a/                   # Backend Service A
 │   └── index.js               # Express server with local APIs
-
-4. **Start Worker (in new terminal):**│
-
-```bash├── server-b/                   # Backend Service B
-
-npm run worker│   └── index.js               # Express server with external APIs
-
-```│
-
+│
+├── server-b/                   # Backend Service B
+│   └── index.js               # Express server with external APIs
+│
 ├── docker-compose.yml         # Temporal server setup
-
-5. **Execute workflow (in new terminal):**├── package.json               # Dependencies and scripts
-
-```bash└── README.md                  # This file
-
-npm run client```
-
+├── package.json               # Dependencies and scripts
+└── README.md                  # This file
 ```
 
 ## 🏗️ Architecture
 
-## Architecture
-
 ```
-
-- **Server A (port 3001)**: Local data processing┌─────────────────────────────────────────────────────────────┐
-
-- **Server B (port 3002)**: External data processing│                     Temporal Server                          │
-
-- **Temporal Server (port 7233)**: Workflow orchestration│                  (Docker Compose)                            │
-
-- **Temporal UI (port 7070)**: http://localhost:7070└──────────────────────┬──────────────────────────────────────┘
-
+┌─────────────────────────────────────────────────────────────┐
+│                     Temporal Server                          │
+│                  (Docker Compose)                            │
+└──────────────────────┬──────────────────────────────────────┘
                        │
-
-## Workflow Flow                       │ gRPC
-
+                       │ gRPC
                        │
-
-1. Validate data (Server A)┌──────────────────────▼──────────────────────────────────────┐
-
-2. Process data locally (Server A)│                  Temporal Worker                             │
-
-3. Process data remotely (Server B)│            (Executes Workflows & Activities)                 │
-
-4. Enrich data (Server B)└─────────┬──────────────────────────┬────────────────────────┘
-
-5. Combine results          │                          │
-
+┌──────────────────────▼──────────────────────────────────────┐
+│                  Temporal Worker                             │
+│            (Executes Workflows & Activities)                 │
+└─────────┬──────────────────────────┬────────────────────────┘
+          │                          │
           │ HTTP                     │ HTTP
-
-## Custom Input          │                          │
-
+          │                          │
 ┌─────────▼─────────┐      ┌────────▼──────────┐
-
-```bash│    Server A       │      │    Server B        │
-
-node temporal/client.js "your custom data"│  (Port 3001)      │      │  (Port 3002)       │
-
-```│                   │      │                    │
+│    Server A       │      │    Server B        │
+│  (Port 3001)      │      │  (Port 3002)       │
+│                   │      │                    │
 │  Local Activities │      │  Remote Activities │
 │  - Validation     │      │  - Enrichment      │
 │  - Processing     │      │  - External API    │
 └───────────────────┘      └────────────────────┘
 ```
+
 
 ## 🚀 Quick Start
 
@@ -328,7 +273,7 @@ node temporal/client.js "my-custom-data" multi
 
 ### View Workflow History
 
-1. Go to http://localhost:8080
+1. Go to http://localhost:7070
 2. Click on your workflow execution
 3. View the complete history of events
 4. Inspect activity inputs/outputs
