@@ -1,4 +1,4 @@
-# Temporal Multi-Server Orchestration POC# Temporal Multi-Server Orchestration POC
+# Temporal Multi-Server Orchestration POC
 
 
 
